@@ -1,5 +1,4 @@
 <?php
-
 class Livre 
 {
     private string $titre;
@@ -81,20 +80,41 @@ class Bibliotheque
         }
         return $livresDisponibles;
     }
-    public function rechercheAuteur()
+    public function rechercheAuteur(string $auteur)
     {
+        $livresAuteur = [];
         foreach($this->livres as $key => $value)
         {
-            $value->auteur;
+            if(str_contains($value->getAuteur(), $auteur))
+            {
+                array_push($livresAuteur, $value);
+            }
+        }
+        if($livresAuteur !== [])
+        {
+            return $livresAuteur;
+        } else {
+            return "Aucun livre n'a été trouvé pour cet auteur !";
         }
     }
-    public function rechercheTitre()
+    public function rechercheTitre(string $titre)
     {
-        
+        $livresTitre = [];
+        foreach($this->livres as $key => $value)
+        {
+            if(str_contains($value->getTitre(), $titre))
+            {
+                array_push($livresTitre, $value);
+            }
+        }
+        if($livresTitre !== [])
+        {
+            return $livresTitre;
+        } else {
+            return "Aucun livre correspondant à ce titre n'a été trouvé !";
+        }
     }
 }
-
-
 
 $livre0 = new Livre("Harry Potter et le prisonnier d'Azkaban", "J. K. Rowling", "12/10/23", 9780758756626, true);
 $livre1 = new Livre("Harry Potter Tome 1 : Harry Potter à l'école des sorciers", "J. K. Rowling", "12 Octobre 2017", 9782070584628, false);
@@ -108,4 +128,4 @@ $bibliotheque0->addBook($livre1);
 $bibliotheque0->addBook($livre2);
 $bibliotheque0->addBook($livre3);
 
-var_dump($bibliotheque0->getLivresDisponibles());
+var_dump($bibliotheque0->rechercheTitre("Le seigneur des"));
